@@ -31,19 +31,19 @@ let iter2 = set[Symbol.iterator]();
 - 이터레이터: { value, done } 객체를 리턴하는 next() 를 가진 값
 - 이터러블/이터레이터 프로토콜: 이터러블을 for...of, 전개 연산자 등과 함께 동작하도록한 규약
 */
-log(iter2.next());
-log(iter2.next());
-log(iter2.next());
-log(iter2.next());  // undefined, done: true --> for문 빠져나감
-log('Arr=======');
-log(iter1.next());
-log(iter1.next());
-log(iter1.next());
-log(iter1.next());
+// log(iter2.next());
+// log(iter2.next());
+// log(iter2.next());
+// log(iter2.next());  // undefined, done: true --> for문 빠져나감
+// log('Arr=======');
+// log(iter1.next());
+// log(iter1.next());
+// log(iter1.next());
+// log(iter1.next());
 
 
 // Map
-// const map = new Map([['a', 1], ['b', 2], ['c', 3]]);
+const map = new Map([['a', 1], ['b', 2], ['c', 3]]);
 // for (const a of map.keys()) log(a);     // key값만 반환
 // for (const a of map.values()) log(a);   // value값만 반환
 // for (const a of map.entries()) log(a);  // 키, 밸류 반환
@@ -56,3 +56,29 @@ log(iter1.next());
 // log(iter3.next());
 // log(iter3.next());
 // log(iter3.next());
+
+
+// 사용자 정의 이터러블 통해 더 자세히 알아보기
+// const iterable = {
+//     [Symbol.iterator]() {
+//         let i = 3;
+//         return {
+//             next() {
+//             return i == 0 ? {done: true} : {value: i--, done: false};
+//             },
+//             [Symbol.iterator]() {  // 이전까지 진행됐던 상테에서 next를 진행할 수 있도록. 이 코드 없으면 TypeError: iterator is not iterable 
+//                 return this;
+//             }
+//         }
+//     }
+// };
+
+// let iterator = iterable[Symbol.iterator]();
+// for (const a of iterator) log(a);
+
+// es6 이후부터 순회는 이터러블:이터레이터 프로토콜 따르고 있음. 매우 중요한 프로토콜
+
+
+// 전개 연산자
+const a = [1, 2];
+log([...a, ...arr, ...set, ...map.keys()]);
